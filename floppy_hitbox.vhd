@@ -45,8 +45,9 @@ entity floppy_hitbox is
 end floppy_hitbox;
 
 architecture Behavioral of floppy_hitbox is
-	Signal floppy_pos_x_clone, floppy_right_clone, floppy_pos_y_clone, floppy_top_clone : unsigned( 9 downto 0 );	--Signal clone, needed for reading and writing it ( floppy_pos_y is out ) 
-	--x position could be constants
+	Signal floppy_pos_y_clone, floppy_top_clone : unsigned( 9 downto 0 );	--Signal clone, needed for reading and writing it ( floppy_pos_y is out ) 
+	Constant floppy_pos_x_clone : unsigned( 9 downto 0 ) := to_unsigned(default_pos_x,10);	--X position never change for floppy
+	Constant floppy_right_clone : unsigned( 9 downto 0 ) := to_unsigned(default_pos_x,10) + to_unsigned(32,10);	--So floppy's right boundary never does
 	
 begin
 	floppy_pos_x <= floppy_pos_x_clone;
@@ -55,11 +56,9 @@ begin
 	floppy_pos_y <= floppy_pos_y_clone;
 	floppy_top <= floppy_top_clone;
 	
-	process( rst, clk, x, y )	--Sync. process
+	process( rst, clk, x, y, floppy_pos_y_clone, floppy_top_clone )	--Sync. process
 	begin
 		if ( rst = '1') then	--Reset to initial positions
-			floppy_pos_x_clone <= to_unsigned(default_pos_x,10);
-			floppy_right_clone <= floppy_pos_x_clone + to_unsigned(32,10);
 			floppy_pos_y_clone <= to_unsigned(default_pos_y,10);
 			floppy_top_clone <= floppy_pos_y_clone + to_unsigned(32,10);
 			inside_floppy <= '0';
