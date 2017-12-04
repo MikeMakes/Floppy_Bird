@@ -22,7 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -30,10 +30,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity artist is
-    Port ( rst : in  STD_LOGIC;
+    Port ( --rst : in  STD_LOGIC;
            en : in  STD_LOGIC;
-           x : in  STD_LOGIC;
-           y : in  STD_LOGIC;
+           --x : in  STD_LOGIC;
+           --y : in  STD_LOGIC;
            inside_floppy : in  STD_LOGIC;
            inside_pipe : in  STD_LOGIC;
            R : out  UNSIGNED( 2 downto 0);
@@ -46,16 +46,19 @@ architecture Behavioral of artist is
 begin
 	background <= inside_floppy NOR inside_pipe;
 
-	process( inside_floppy, inside_pipe, background )
+	process( en, inside_floppy, inside_pipe, background )
 	begin
-		R <= "111"; G <= "111"; B <= "01"; --Whatever is YELLOW (?)
-		if ( inside_floppy = '1' ) then --Floppy is
-			R <= "111"; G <= "000"; B <= "00";	--RED
-		elsif ( inside_pipe = '1' ) then	--Pipes are
-			R <= "000"; G <= "111"; B <= "00"; --GREEN
-		elsif ( background = '1' ) then --Background is
-			R <= "000"; G <= "000"; B <= "11";	--BLUE
-		end if;	
+		R <= "000"; G <= "000"; B <= "00";
+		if ( en = '1' ) then
+			R <= "111"; G <= "111"; B <= "01"; --Whatever is YELLOW (?)
+			if ( inside_floppy = '1' ) then --Floppy is
+				R <= "111"; G <= "000"; B <= "00";	--RED
+			elsif ( inside_pipe = '1' ) then	--Pipes are
+				R <= "000"; G <= "111"; B <= "00"; --GREEN
+			elsif ( background = '1' ) then --Background is
+				R <= "000"; G <= "000"; B <= "11";	--BLUE
+			end if;
+		end if;
 	end process; --And this is a VHDL file, not a poem, go seek art in its proper form
 	
 end Behavioral;
