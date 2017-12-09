@@ -50,7 +50,7 @@ begin
 	begin
 		R <= "000"; G <= "000"; B <= "00";
 		if ( en = '1' ) then
-			R <= "111"; G <= "111"; B <= "01"; --Whatever is YELLOW (?)
+			R <= "111"; G <= "111"; B <= "01"; --Whatever is YELLOW (?). IS YELLOW. I LOVE YELLOW. WE MUST LOVE YELLOW. YELLOW IS LIKE A BIG BLACK COCK.
 			if ( inside_floppy = '1' ) then --Floppy is
 				R <= "111"; G <= "000"; B <= "00";	--RED
 			elsif ( inside_pipe = '1' ) then	--Pipes are

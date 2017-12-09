@@ -58,7 +58,9 @@ COMPONENT floppy_hitbox is
 end COMPONENT;
 
 COMPONENT pipe_hitbox is
-	Generic( default_pos_x : INTEGER := 639; default_pos_y : INTEGER := 259; default_gap : INTEGER := 80 );
+	Generic( default_pos_x : INTEGER := 639;
+				default_pos_y : INTEGER := 259; 
+				default_gap : INTEGER := 80);
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
            en : in  STD_LOGIC;
@@ -109,10 +111,16 @@ COMPONENT screener is
            red_out : out  STD_LOGIC_VECTOR(2 downto 0);	--rgb outnput red
            blue_out : out STD_LOGIC_VECTOR(1 downto 0);	--rgb output blue
            green_out : out  STD_LOGIC_VECTOR(2 downto 0));	--rgb input gren
-end screener;
+end COMPONENT;
 
-Signal blank_h, blank_v : STD_LOGIC;
-Signal x,y : UNSIGNED ( 9 downto 0 );
+--Internal signals to connect component
+signal pulse_h, pulse_v,blank_h,blank_v : STD_LOGIC;
+signal x,y : UNSIGNED ( 9 downto 0 );
+signal pos_bird,pos_pipe : UNSIGNED ( 9 downto 0 );
+signal r_aux: UNSIGNED(2 downto 0);
+signal g_aux: UNSIGNED(2 downto 0);
+signal b_aux: UNSIGNED(1 downto 0);
+
 
 begin
 
@@ -126,22 +134,21 @@ begin
 		Port Map ( clk => clk,
 						reset => rst,
 						enable => en,
-						pulse_screen => hs,	--Connected to HS and VS in top module.
+						pulse_screen => pulse_h,	--Connected to HS and VS in top module.
 						in_screen => blank_h,	--Draw screen	
 						end_screen => open,		--Reset counter
 						Q => x);
 						
 	v_counter : counter
 		Generic Map(Nbit:= 10,
-						End_Of_Screen:= ,
-						Start_Of_Pulse:= , 
-						End_Of_Pulse:= ,
-						End_Of_Line:= );
-	 
+						End_Of_Screen:= 639,
+						Start_Of_Pulse:= 655, 
+						End_Of_Pulse:= 751,
+						End_Of_Line:= 799);
 		Port Map ( clk => clk,
 						reset => rst,
 						enable => en,
-						pulse_screen => vs,	--Connected to HS and VS in top module.
+						pulse_screen => pulse_v,	--Connected to HS and VS in top module.
 						in_screen => blank_v,	--Draw screen	
 						end_screen => open,		--Reset counter
 						Q => y);
@@ -191,12 +198,12 @@ begin
 	vga : screener
 	    Port ( in_scn_H => blank_h,	--blank_h.	%IF blank_H and blanck_V == 1 => all '0'.	
            in_scn_V => blank_v,	--blank_v.	
-           red_mux => r,	--rgb input red (color mux)
-           blue_mux => g,	--rgb input blue (color mux)
-			  green_mux => b,	--rgb input green (color mux)
-           red_out => r_out,	--rgb outnput red
-           blue_out => b_out,	--rgb output blue
-           green_out => g_out,);	--rgb input gren
+           red_mux => r_aux,	--rgb input red (color mux)
+           blue_mux => g_aux,	--rgb input blue (color mux)
+			  green_mux => b_aux,	--rgb input green (color mux)
+           red_out => r,	--rgb outnput red
+           blue_out => b,	--rgb output blue
+           green_out => g);	--rgb input gren
 
 
 end Behavioral;

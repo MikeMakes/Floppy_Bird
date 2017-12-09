@@ -1,22 +1,3 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    15:59:38 12/02/2017 
--- Design Name: 
--- Module Name:    pipe_hitbox - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -30,7 +11,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity pipe_hitbox is
-	Generic( default_pos_x : INTEGER := 639; default_pos_y : INTEGER := 259; default_gap : INTEGER := 80 );
+	Generic( default_pos_x : INTEGER := 639;
+				default_pos_y : INTEGER := 259; 
+				default_gap : INTEGER := 80 );
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
            en : in  STD_LOGIC;
@@ -45,9 +28,10 @@ entity pipe_hitbox is
 end pipe_hitbox;
 
 architecture Behavioral of pipe_hitbox is
-	Signal pipe_pos_y_clone, pipe_top_clone : unsigned( 9 downto 0 );	--Signal clone, needed for reading and writing it ( floppy_pos_y is out ) 
-	Constant pipe_pos_y_clone : unsigned( 9 downto 0 ) := to_unsigned(default_pos_y,10);	--Y position never change for pipes (for now)
-	Constant pipe_top_clone : unsigned( 9 downto 0 ) := to_unsigned(default_pos_y,10) - to_unsigned(default_gap,10);	--So pipe's top (bottom-pipe top) boundary never does
+	signal pipe_pos_y_clone:unsigned( 9 downto 0 );	--Signal clone, needed for reading and writing it ( floppy_pos_y is out )
+	signal pipe_top_clone:unsigned( 9 downto 0 );	--Signal clone, needed for reading and writing it ( floppy_pos_y is out )
+	constant pipe_pos_y_clone : unsigned(9 downto 0) := to_unsigned(default_pos_y,10);	--Y position never change for pipes (for now)
+	constant pipe_top_clone : unsigned( 9 downto 0 ) := to_unsigned(default_pos_y,10) - to_unsigned(default_gap,10);	--So pipe's top (bottom-pipe top) boundary never does
 	
 begin
 	pipe_pos_x <= pipe_pos_x_clone;
