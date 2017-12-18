@@ -118,8 +118,8 @@ BEGIN
 		
 		wait for clk_period*10;
 		rst<='0';
-		x<=to_unsigned(79,10);
-		y<=to_unsigned(300,10);
+		x<=to_unsigned(80,10);
+		y<=to_unsigned(325,10);
 		
 		wait for clk_period*10;
 		floppy_v<="0000001010";

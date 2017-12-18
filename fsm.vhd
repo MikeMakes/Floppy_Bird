@@ -141,7 +141,6 @@ begin
 
 	floppy_v <= to_unsigned(10,10);
 	pipe_v <= to_unsigned(10,10);
-
 	h_counter : counter
 		Generic Map(Nbit => 10,
 						End_Of_Screen => 639,
@@ -224,16 +223,6 @@ begin
            red_out => R_out,	--rgb outnput red
            blue_out => B_out,	--rgb output blue
            green_out => G_out);	--rgb input gren
-
-	next_clk_pixel <= not clk_pixel;
-	pixel_freq:process( clk, rst )
-	begin
-		if ( rst = '1' ) then
-			clk_pixel <= '0' ;
-		elsif ( rising_edge(clk) ) then
-			clk_pixel <= next_clk_pixel;
-		end if;
-	end process;
 
 --	fsm:process(button)
 --	begin

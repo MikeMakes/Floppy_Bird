@@ -22,7 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -46,7 +46,7 @@ architecture Behavioral of artist is
 begin
 	background <= inside_floppy NOR inside_pipe;
 
-	process( en, inside_floppy, inside_pipe, background )
+	mux: process( en, inside_floppy, inside_pipe, background )
 	begin
 		R <= "000"; G <= "000"; B <= "00";
 		if ( en = '1' ) then
