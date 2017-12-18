@@ -15,14 +15,14 @@ entity counter is
 			  pulse_screen : out STD_LOGIC;	--Connected to HS and VS in top module.
 			  in_screen : out STD_LOGIC;	--Draw screen	
 			  end_screen : out STD_LOGIC;		--Reset counter
-           Q : out  STD_LOGIC_VECTOR (Nbit-1 downto 0));
+           Q : out  unsigned (Nbit-1 downto 0));
 end counter;
 
 architecture Behavioral of counter is
 
 signal p_cont,cont : unsigned(Nbit-1 downto 0);
 begin
-	Q <= std_logic_vector(cont);
+	Q <= cont;
 
 	comb:process(cont,enable)
 		begin

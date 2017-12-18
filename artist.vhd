@@ -22,7 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
-use IEEE.NUMERIC_STD.ALL;
+--use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -36,9 +36,9 @@ entity artist is
            --y : in  STD_LOGIC;
            inside_floppy : in  STD_LOGIC;
            inside_pipe : in  STD_LOGIC;
-           R : out  UNSIGNED( 2 downto 0);
-           G : out  UNSIGNED( 2 downto 0);
-           B : out  UNSIGNED( 1 downto 0));
+           R : out  STD_LOGIC_VECTOR( 2 downto 0);
+           G : out  STD_LOGIC_VECTOR( 2 downto 0);
+           B : out  STD_LOGIC_VECTOR( 1 downto 0));
 end artist;
 
 architecture Behavioral of artist is
