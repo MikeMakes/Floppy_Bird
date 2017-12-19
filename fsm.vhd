@@ -59,20 +59,26 @@ COMPONENT counter is
            Q : out  unsigned (Nbit-1 downto 0));
 end COMPONENT;
 
-COMPONENT floppy_hitbox is
-	Generic( default_pos_x : INTEGER := 79; 
-				default_pos_y : INTEGER := 300);
+COMPONENT fl0ppy_hitbox is
+	Generic( default_pos_x : INTEGER := 79; default_pos_y : INTEGER := 300);
     Port ( clk : in  STD_LOGIC;
 			  rst : in STD_LOGIC;
 			  en : in STD_LOGIC;
-			  x : in unsigned ( 9 downto 0 );
-			  y : in unsigned ( 9 downto 0 );
            floppy_v : in  unsigned ( 9 downto 0 );	--Floppy's "velocity"
            floppy_pos_x : out  unsigned ( 9 downto 0 );	--Floppy x position / Floppy's left hitbox boundary
            floppy_pos_y : out  unsigned ( 9 downto 0 );	--Floppy y position / Floppy's bottom hitbox boundary
 			  floppy_right : out unsigned( 9 downto 0 );	--Floppy 's right hitbox boundary
-			  floppy_top : out unsigned( 9 downto 0 );	--Floppy 's top hitbox boundary
-			  inside_floppy : out STD_LOGIC);	--The VGA coordinates are in the hitbox
+			  floppy_top : out unsigned( 9 downto 0 ));	--Floppy 's top hitbox boundary
+end COMPONENT;
+
+COMPONENT inside_fl0ppy is
+    Port ( x : in unsigned ( 9 downto 0 );
+			  y : in unsigned ( 9 downto 0 );
+           pos_x : in  unsigned ( 9 downto 0 );	--Floppy x position / Floppy's left hitbox boundary
+           pos_y : in  unsigned ( 9 downto 0 );	--Floppy y position / Floppy's bottom hitbox boundary
+			  right : in unsigned( 9 downto 0 );	--Floppy 's right hitbox boundary
+			  top : in unsigned( 9 downto 0 );	--Floppy 's top hitbox boundary
+			  inside : out STD_LOGIC);	--The VGA coordinates are in the hitbox
 end COMPONENT;
 
 COMPONENT pipe_hitbox is
@@ -126,7 +132,7 @@ Signal clk_pixel, next_clk_pixel : STD_LOGIC;
 Signal blank_h, blank_v, h_sat, v_enable : STD_LOGIC;
 signal x,y : UNSIGNED ( 9 downto 0 );
 
-signal floppy_v : UNSIGNED ( 9 downto 0 );--, floppy_pos_x, floppy_right, floppy_pos_y, floppy_top : UNSIGNED ( 9 downto 0 );
+signal floppy_v, floppy_pos_x, floppy_right, floppy_pos_y, floppy_top : UNSIGNED ( 9 downto 0 );
 signal inside_floppy : STD_LOGIC;
 
 signal pipe_v : UNSIGNED ( 9 downto 0 );--, pipe_pos_x, pipe_right, pipe_pos_y, pipe_top : UNSIGNED ( 9 downto 0 );
@@ -170,21 +176,27 @@ begin
 						in_screen => blank_v,	--Draw screen	
 						end_screen => open,		--Reset counter
 						Q => y);
-
-	floppy : floppy_hitbox
-		Generic Map( default_pos_x  => 79,
-						default_pos_y  => 300)
+	
+	fl0ppy : fl0ppy_hitbox
+		Generic Map(default_pos_x => 79,
+						default_pos_y => 300)
 		Port Map( clk => clk,
-					rst => rst,
-					en => en,
-					x => x,
+			  rst => rst,
+			  en => en,
+           floppy_v => floppy_v,	--Floppy's "velocity"
+           floppy_pos_x => floppy_pos_x,	--Floppy x position / Floppy's left hitbox boundary
+           floppy_pos_y => floppy_pos_y,	--Floppy y position / Floppy's bottom hitbox boundary
+			  floppy_right => floppy_right,	--Floppy 's right hitbox boundary
+			  floppy_top => floppy_top);	--Floppy 's top hitbox boundary
+	
+	in_fl0ppy : inside_fl0ppy
+		Port Map(x => x,
 					y => y,
-					floppy_v => floppy_v,	--Floppy's "velocity"
-					floppy_pos_x => open,--floppy_pos_x,	--Floppy x position / Floppy's left hitbox boundary
-					floppy_pos_y => open,--floppy_pos_y,	--Floppy y position / Floppy's bottom hitbox boundary
-					floppy_right => open,--floppy_right,	--Floppy 's right hitbox boundary
-					floppy_top => open,--floppy_top,	--Floppy 's top hitbox boundary
-					inside_floppy => inside_floppy);	--The VGA coordinates are in the hitbox
+					pos_x => floppy_pos_x,--Floppy x position / Floppy's left hitbox boundary
+					pos_y => floppy_pos_y,--Floppy y position / Floppy's bottom hitbox boundary
+					right => floppy_right,--Floppy 's right hitbox boundary
+					top =>	floppy_top,--Floppy 's top hitbox boundary
+					inside => inside_floppy);	--The VGA coordinates are in the hitbox
 
 	pipe : pipe_hitbox
 		Generic Map( default_pos_x  => 639,

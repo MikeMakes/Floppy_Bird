@@ -44,9 +44,9 @@ ARCHITECTURE behavior OF artist_tb IS
          en : IN  std_logic;
          inside_floppy : IN  std_logic;
          inside_pipe : IN  std_logic;
-         R : OUT  UNSIGNED(2 downto 0);
-         G : OUT  UNSIGNED(2 downto 0);
-         B : OUT  UNSIGNED(1 downto 0)
+         R : OUT  STD_LOGIC_VECTOR(2 downto 0);
+         G : OUT  STD_LOGIC_VECTOR(2 downto 0);
+         B : OUT  STD_LOGIC_VECTOR(1 downto 0)
         );
     END COMPONENT;
     
@@ -96,7 +96,7 @@ BEGIN
       wait for 1000 ns;
 
       -- insert stimulus here 
-		en <= '0';
+		en <= '1';
 		
 		wait for 100 ns;
 		inside_floppy<= '1';
