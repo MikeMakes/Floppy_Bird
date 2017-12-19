@@ -126,10 +126,10 @@ Signal clk_pixel, next_clk_pixel : STD_LOGIC;
 Signal blank_h, blank_v, h_sat, v_enable : STD_LOGIC;
 signal x,y : UNSIGNED ( 9 downto 0 );
 
-signal floppy_v, floppy_pos_x, floppy_right, floppy_pos_y, floppy_top : UNSIGNED ( 9 downto 0 );
+signal floppy_v : UNSIGNED ( 9 downto 0 );--, floppy_pos_x, floppy_right, floppy_pos_y, floppy_top : UNSIGNED ( 9 downto 0 );
 signal inside_floppy : STD_LOGIC;
 
-signal pipe_v, pipe_pos_x, pipe_right, pipe_pos_y, pipe_top : UNSIGNED ( 9 downto 0 );
+signal pipe_v : UNSIGNED ( 9 downto 0 );--, pipe_pos_x, pipe_right, pipe_pos_y, pipe_top : UNSIGNED ( 9 downto 0 );
 signal inside_pipe : STD_LOGIC;
 
 signal R: STD_LOGIC_VECTOR(2 downto 0);
@@ -156,7 +156,6 @@ begin
 						end_screen => h_sat,		--Reset counter
 						Q => x);
 						
-						
 	v_enable <= h_sat AND clk_pixel;
 	v_counter : counter
 		Generic Map(Nbit => 10,
@@ -181,10 +180,10 @@ begin
 					x => x,
 					y => y,
 					floppy_v => floppy_v,	--Floppy's "velocity"
-					floppy_pos_x => floppy_pos_x,	--Floppy x position / Floppy's left hitbox boundary
-					floppy_pos_y => floppy_pos_y,	--Floppy y position / Floppy's bottom hitbox boundary
-					floppy_right => floppy_right,	--Floppy 's right hitbox boundary
-					floppy_top => floppy_top,	--Floppy 's top hitbox boundary
+					floppy_pos_x => open,--floppy_pos_x,	--Floppy x position / Floppy's left hitbox boundary
+					floppy_pos_y => open,--floppy_pos_y,	--Floppy y position / Floppy's bottom hitbox boundary
+					floppy_right => open,--floppy_right,	--Floppy 's right hitbox boundary
+					floppy_top => open,--floppy_top,	--Floppy 's top hitbox boundary
 					inside_floppy => inside_floppy);	--The VGA coordinates are in the hitbox
 
 	pipe : pipe_hitbox
@@ -197,10 +196,10 @@ begin
            x => x,
            y => y,
            pipe_v => pipe_v, --Debug purposed, pipe_vel is actually non variable, it should be a generic
-           pipe_pos_x => pipe_pos_x,
-           pipe_right => pipe_right,
-           pipe_pos_y => pipe_pos_y,
-           pipe_top => pipe_top,
+           pipe_pos_x => open,--pipe_pos_x,
+           pipe_right => open,--pipe_right,
+           pipe_pos_y => open,--pipe_pos_y,
+           pipe_top => open,--pipe_top,
            inside_pipe => inside_pipe);
 			  
 	dali : artist
@@ -223,6 +222,16 @@ begin
            red_out => R_out,	--rgb outnput red
            blue_out => B_out,	--rgb output blue
            green_out => G_out);	--rgb input gren
+
+	next_clk_pixel <= not clk_pixel;
+	div_frec:process( clk, rst )
+	begin
+		if ( rst='1' ) then
+			clk_pixel <= '0';
+		elsif ( rising_edge(clk) ) then
+		clk_pixel <= next_clk_pixel;
+		end if;
+	end process;
 
 --	fsm:process(button)
 --	begin
