@@ -1,0 +1,15 @@
+# Output products list for <pipe_ROM>
+_xmsgs\pn_parser.xmsgs
+blk_mem_gen_ds512.pdf
+pipe_ROM.asy
+pipe_ROM.gise
+pipe_ROM.mif
+pipe_ROM.ngc
+pipe_ROM.sym
+pipe_ROM.vhd
+pipe_ROM.vho
+pipe_ROM.xco
+pipe_ROM.xise
+pipe_ROM_flist.txt
+pipe_ROM_readme.txt
+pipe_ROM_xmdf.tcl

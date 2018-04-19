@@ -1,0 +1,15 @@
+# Output products list for <floppy_ROM>
+_xmsgs\pn_parser.xmsgs
+blk_mem_gen_ds512.pdf
+floppy_ROM.asy
+floppy_ROM.gise
+floppy_ROM.mif
+floppy_ROM.ngc
+floppy_ROM.sym
+floppy_ROM.vhd
+floppy_ROM.vho
+floppy_ROM.xco
+floppy_ROM.xise
+floppy_ROM_flist.txt
+floppy_ROM_readme.txt
+floppy_ROM_xmdf.tcl
