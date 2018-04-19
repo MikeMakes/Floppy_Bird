@@ -1,0 +1,21 @@
+NET "clk" LOC = "M6";
+NET "rst" LOC = "P11";
+
+NET "config0" LOC = "K3";
+NET "config1" LOC = "L3";
+
+NET "R_OUT<0>" LOC = "C14";
+NET "R_OUT<1>" LOC = "D13";
+NET "R_OUT<2>" LOC = "F13";
+
+NET "G_OUT<0>" LOC = "F14";
+NET "G_OUT<1>" LOC = "G13";
+NET "G_OUT<2>" LOC = "G14";
+
+NET "B_OUT<0>" LOC = "H13";
+NET "B_OUT<1>" LOC = "J13";
+
+NET "HS" LOC = "J14";
+NET "VS" LOC = "K13";
+
+NET "BTN" LOC = "G12";
